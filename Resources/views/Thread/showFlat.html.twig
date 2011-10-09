@@ -11,9 +11,9 @@
 
 <div class="fos_comment_thread_show">
 
-    {% include "FOSCommentBundle:Comment:new.html.twig" with {"form": newCommentForm, "first": 0 == thread.numComments, "thread": thread} %}
+    {% include "FOSCommentBundle:Comment:new.html.twig" with {"form": newCommentForm, "first": 0 == thread.numComments, "thread": thread, "urlGenerator": urlGenerator} %}
 
-    <a href="{{ path("fos_comment_thread_show_feed", {"id": thread.id}) }}">{% trans from 'FOSCommentBundle' %}fos_comment_rss_feed{% endtrans %}</a>
+    <a href="{{ urlGenerator.getThreadShowFeedUrl(thread.id) }}">{% trans from 'FOSCommentBundle' %}fos_comment_rss_feed{% endtrans %}</a>
 
     {% if thread.numComments > 0 %}
         <h3>

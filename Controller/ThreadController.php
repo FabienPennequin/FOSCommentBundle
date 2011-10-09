@@ -84,11 +84,12 @@ class ThreadController extends ContainerAware
         $replyForm = $this->getCommentForm($thread);
 
         return $this->container->get('templating')->renderResponse('FOSCommentBundle:Thread:show.html.twig', array(
-            'thread'           => $thread,
-            'sorter'           => $sorter,
-            'displayDepth'     => $displayDepth,
-            'newCommentForm'   => $newCommentForm->createView(),
-            'replyForm'        => $replyForm->createView(),
+            'thread'            => $thread,
+            'sorter'            => $sorter,
+            'displayDepth'      => $displayDepth,
+            'newCommentForm'    => $newCommentForm->createView(),
+            'replyForm'         => $replyForm->createView(),
+            'urlGenerator'      => $this->getUrlGenerator(),
         ));
     }
 
@@ -115,10 +116,11 @@ class ThreadController extends ContainerAware
         $replyForm = $this->getCommentForm($thread);
 
         return $this->container->get('templating')->renderResponse('FOSCommentBundle:Thread:showFlat.html.twig', array(
-            'thread'           => $thread,
-            'sorter'           => $sorter,
-            'newCommentForm'   => $newCommentForm->createView(),
-            'replyForm'        => $replyForm->createView(),
+            'thread'            => $thread,
+            'sorter'            => $sorter,
+            'newCommentForm'    => $newCommentForm->createView(),
+            'replyForm'         => $replyForm->createView(),
+            'urlGenerator'      => $this->getUrlGenerator(),
         ));
     }
 
@@ -136,7 +138,13 @@ class ThreadController extends ContainerAware
         }
 
         return $this->container->get('templating')->renderResponse('FOSCommentBundle:Thread:showFeed.xml.twig', array(
-            'thread' => $thread
+            'thread'        => $thread,
+            'urlGenerator'  => $this->getUrlGenerator(),
         ));
+    }
+
+    protected function getUrlGenerator()
+    {
+        return $this->container->get('fos_comment.router.url_generator');
     }
 }

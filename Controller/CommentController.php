@@ -13,6 +13,7 @@ namespace FOS\CommentBundle\Controller;
 
 use FOS\CommentBundle\Model\CommentInterface;
 use FOS\CommentBundle\Model\ThreadInterface;
+use FOS\CommentBundle\Router\CommentUrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,14 +36,15 @@ class CommentController extends ContainerAware
      * @param integer $displayDepth
      * @return Response
      */
-    public function treeAction(ThreadInterface $thread, $sorter = null, $displayDepth = null)
+    public function treeAction(ThreadInterface $thread, $sorter = null, $displayDepth = null, CommentUrlGeneratorInterface $urlGenerator = null)
     {
         $nodes = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread, $sorter, $displayDepth);
 
         return $this->container->get('templating')->renderResponse('FOSCommentBundle:Comment:tree.html.twig', array(
-            'nodes' => $nodes,
-            'displayDepth' => $displayDepth,
-            'sorter' => $sorter,
+            'nodes'         => $nodes,
+            'displayDepth'  => $displayDepth,
+            'sorter'        => $sorter,
+            'urlGenerator'  => $urlGenerator ? $urlGenerator : $this->container->get('fos_comment.router.url_generator'),
         ));
     }
 

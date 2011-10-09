@@ -46,7 +46,7 @@ class FOSCommentExtension extends Extension
         }
         $loader->load(sprintf('%s.xml', $config['db_driver']));
 
-        foreach (array('blamer', 'form', 'creator', 'spam_detection', 'twig', 'sorting') as $basename) {
+        foreach (array('blamer', 'form', 'creator', 'spam_detection', 'twig', 'sorting', 'router') as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
@@ -80,6 +80,8 @@ class FOSCommentExtension extends Extension
         $container->setAlias('fos_comment.manager.thread', $config['service']['manager']['thread']);
         $container->setAlias('fos_comment.manager.comment', $config['service']['manager']['comment']);
         $container->setAlias('fos_comment.manager.vote', $config['service']['manager']['vote']);
+
+        $container->setAlias('fos_comment.router.url_generator', $config['service']['router']['url_generator']);
     }
 
     protected function loadAcl(ContainerBuilder $container, array $config)
