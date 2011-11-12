@@ -10,5 +10,5 @@
 #}
 
 {% for node in nodes %}
-    {% include "FOSCommentBundle:Comment:show.html.twig" with { "comment": node } %}
+    {% include "FOSCommentBundle:Comment:show.html.twig" with { "comment": node, "urlGenerator": urlGenerator } %}
 {% endfor %}
